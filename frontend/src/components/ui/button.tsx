@@ -1,6 +1,6 @@
 ﻿import * as React from "react"
 
-const Button = React.forwardRef
+const Button = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement> & {
     variant?: "default" | "outline" | "ghost" | "destructive"
@@ -24,7 +24,7 @@ const Button = React.forwardRef
 
   return (
     <button
-      className={${baseClasses}   }
+      className={`${baseClasses} ${variants[variant]} ${sizes[size]} ${className || ''}`}
       ref={ref}
       {...props}
     />
