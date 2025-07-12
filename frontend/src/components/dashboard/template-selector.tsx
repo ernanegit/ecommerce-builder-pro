@@ -2,6 +2,7 @@
 
 import { Template } from '@/lib/api'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Check } from 'lucide-react'
@@ -14,7 +15,9 @@ interface TemplateCardProps {
 
 export function TemplateCard({ template, isSelected, onSelect }: TemplateCardProps) {
   return (
-    <Card className={elative cursor-pointer transition-all hover:shadow-md }>
+    <Card className={`relative cursor-pointer transition-all hover:shadow-md ${
+      isSelected ? 'ring-2 ring-blue-500 bg-blue-50' : ''
+    }`} onClick={() => onSelect(template.id)}>
       {isSelected && (
         <div className="absolute top-2 right-2 z-10">
           <div className="bg-blue-500 text-white rounded-full p-1">
@@ -60,7 +63,10 @@ export function TemplateCard({ template, isSelected, onSelect }: TemplateCardPro
         )}
         
         <Button 
-          onClick={() => onSelect(template.id)}
+          onClick={(e) => {
+            e.stopPropagation()
+            onSelect(template.id)
+          }}
           variant={isSelected ? "default" : "outline"}
           className="w-full mt-4"
         >
@@ -97,10 +103,20 @@ export function TemplateSelector({
               <div className="space-y-2">
                 <div className="h-3 bg-gray-200 rounded"></div>
                 <div className="h-3 bg-gray-200 rounded w-5/6"></div>
+                <div className="h-8 bg-gray-200 rounded mt-4"></div>
               </div>
             </CardContent>
           </Card>
         ))}
+      </div>
+    )
+  }
+
+  if (templates.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-gray-500 mb-4">Nenhum template disponível no momento</p>
+        <p className="text-sm text-gray-400">Verifique se o backend está funcionando</p>
       </div>
     )
   }
@@ -112,7 +128,12 @@ export function TemplateSelector({
     <div className="space-y-8">
       {popularTemplates.length > 0 && (
         <div>
-          <h3 className="text-lg font-semibold mb-4">Templates Populares</h3>
+          <h3 className="text-lg font-semibold mb-4 flex items-center">
+            Templates Populares
+            <Badge variant="secondary" className="ml-2 text-xs">
+              Recomendados
+            </Badge>
+          </h3>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {popularTemplates.map((template) => (
               <TemplateCard
@@ -140,6 +161,17 @@ export function TemplateSelector({
                 onSelect={onSelectTemplate}
               />
             ))}
+          </div>
+        </div>
+      )}
+
+      {selectedTemplateId && (
+        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="flex items-center">
+            <Check className="w-5 h-5 text-blue-600 mr-2" />
+            <span className="text-sm font-medium text-blue-900">
+              Template selecionado: {templates.find(t => t.id === selectedTemplateId)?.name}
+            </span>
           </div>
         </div>
       )}

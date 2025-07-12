@@ -1,6 +1,7 @@
 ﻿'use client'
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+
+
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { useStores, useHealthCheck } from '@/hooks/use-api'
@@ -33,8 +34,8 @@ function StatsCard({ title, value, description, icon: Icon, trend }: StatsCardPr
           <p className="text-xs text-muted-foreground">{description}</p>
         )}
         {trend && (
-          <div className={lex items-center text-xs }>
-            <TrendingUp className={h-3 w-3 mr-1 } />
+          <div className={`flex items-center text-xs ${trend.isPositive ? 'text-green-600' : 'text-red-600'}`}>
+            <TrendingUp className={`h-3 w-3 mr-1 ${trend.isPositive ? 'text-green-600' : 'text-red-600'}`} />
             {trend.value}% desde o mês passado
           </div>
         )}
@@ -232,7 +233,7 @@ export function DashboardOverview() {
                   <Button 
                     size="sm" 
                     variant="outline"
-                    onClick={() => router.push(/dashboard/stores//settings)}
+                    onClick={() => router.push(`/dashboard/stores/${store.id}/settings`)}
                   >
                     Configurar
                   </Button>

@@ -12,7 +12,10 @@
     "prisma:studio": "prisma studio",
     "prisma:seed": "ts-node prisma/seed.ts"
   },
-  "keywords": ["ecommerce", "automation"],
+  "keywords": [
+    "ecommerce",
+    "automation"
+  ],
   "author": "E-commerce Builder Team",
   "license": "MIT",
   "dependencies": {

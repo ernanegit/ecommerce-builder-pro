@@ -1,4 +1,5 @@
 ﻿import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
@@ -55,14 +56,16 @@ async function main() {
 
   console.log('Created 3 templates');
 
-  // Usuário demo
+  // Usuário demo - gerar hash da senha corretamente
+  const hashedPassword = await bcrypt.hash('demo123', 12);
+  
   const user = await prisma.user.upsert({
     where: { email: 'demo@test.com' },
     update: {},
     create: {
       name: 'Demo User',
       email: 'demo@test.com',
-      password: '$2b$12$9vYwWq0Gu8p3qKxG4fHnXeBKS8AzC4qqHqS4qZxYKZtLCQA2QM2Fe',
+      password: hashedPassword,
       plan: 'PRO'
     }
   });

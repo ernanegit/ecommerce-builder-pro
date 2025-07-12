@@ -71,14 +71,14 @@ class ApiClient {
     endpoint: string,
     options: RequestInit = {}
   ): Promise<T> {
-    const url = ${API_URL}
+    const url = `${API_URL}${endpoint}`
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
       ...options.headers,
     }
 
     if (this.token) {
-      headers.Authorization = Bearer 
+      headers['Authorization'] = `Bearer ${this.token}`
     }
 
     const response = await fetch(url, {
@@ -88,7 +88,7 @@ class ApiClient {
 
     if (!response.ok) {
       const error = await response.json().catch(() => ({}))
-      throw new Error(error.message || HTTP )
+      throw new Error(error.message || `HTTP ${response.status}`)
     }
 
     return response.json()

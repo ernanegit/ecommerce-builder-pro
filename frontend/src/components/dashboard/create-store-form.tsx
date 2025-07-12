@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+
 import { LoadingSpinner } from '@/components/ui/loading'
 import { TemplateSelector } from './template-selector'
 import { useTemplates, useCreateStore } from '@/hooks/use-api'
@@ -100,11 +101,17 @@ export function CreateStoreForm() {
         <div className="flex items-center justify-between">
           {[1, 2, 3].map((stepNumber) => (
             <div key={stepNumber} className="flex items-center">
-              <div className={w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium }>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                step >= stepNumber 
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-gray-200 text-gray-600'
+              }`}>
                 {stepNumber}
               </div>
               {stepNumber < 3 && (
-                <div className={w-16 h-1 mx-2 } />
+                <div className={`w-16 h-1 mx-2 ${
+                  step > stepNumber ? 'bg-blue-600' : 'bg-gray-200'
+                }`} />
               )}
             </div>
           ))}
@@ -150,7 +157,7 @@ export function CreateStoreForm() {
                   placeholder="minhaloja"
                   value={formData.subdomain}
                   onChange={handleInputChange}
-                  className={lex-1 }
+                  className={`flex-1 ${errors.subdomain ? 'border-red-500' : ''}`}
                 />
                 <span className="text-sm text-gray-500">.ecommerce-builder.com</span>
               </div>
