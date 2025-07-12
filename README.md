@@ -338,3 +338,6 @@ MIT License - veja [LICENSE](LICENSE) para detalhes.
 **Desenvolvido para revolucionar a criação de e-commerce no Brasil** 
 
 </div>
+
+
+Adicionado frontend basico
