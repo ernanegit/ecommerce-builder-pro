@@ -4,8 +4,10 @@ import { useAuth } from '@/lib/auth-context'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Store, Zap, Shield, TrendingUp } from 'lucide-react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+
+
 
 export default function HomePage() {
   const { isAuthenticated, isLoading } = useAuth()
@@ -112,11 +114,11 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li> Templates responsivos</li>
-                  <li> Configuração automática</li>
-                  <li> SSL gratuito</li>
-                  <li> CDN global</li>
+                <ul className="space-y-2 text-sm text-gray-200">
+                  <li>✓ Templates responsivos</li>
+                  <li>✓ Configuração automática</li>
+                  <li>✓ SSL gratuito</li>
+                  <li>✓ CDN global</li>
                 </ul>
               </CardContent>
             </Card>
@@ -130,11 +132,11 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li> PagSeguro & Mercado Pago</li>
-                  <li> Correios integrado</li>
-                  <li> Nota Fiscal automática</li>
-                  <li> PIX nativo</li>
+                <ul className="space-y-2 text-sm text-gray-200">
+                  <li>✓ PagSeguro & Mercado Pago</li>
+                  <li>✓ Correios integrado</li>
+                  <li>✓ Nota Fiscal automática</li>
+                  <li>✓ PIX nativo</li>
                 </ul>
               </CardContent>
             </Card>
@@ -148,11 +150,11 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li> Dashboard em tempo real</li>
-                  <li> Funil de conversão</li>
-                  <li> Abandono de carrinho</li>
-                  <li> Relatórios automáticos</li>
+                <ul className="space-y-2 text-sm text-gray-200">
+                  <li>✓ Dashboard em tempo real</li>
+                  <li>✓ Funil de conversão</li>
+                  <li>✓ Abandono de carrinho</li>
+                  <li>✓ Relatórios automáticos</li>
                 </ul>
               </CardContent>
             </Card>
@@ -171,9 +173,9 @@ export default function HomePage() {
           </p>
           <Button 
             size="lg" 
-            variant="secondary"
+            variant="outline"
             onClick={() => router.push('/auth')}
-            className="text-lg px-8 py-3"
+            className="text-lg px-8 py-3 bg-white text-blue-600 hover:bg-gray-50"
           >
             Criar Minha Loja Agora
           </Button>
@@ -184,7 +186,7 @@ export default function HomePage() {
       <footer className="bg-gray-900 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-gray-400">
-             2025 E-commerce Builder Pro. Todos os direitos reservados.
+            © 2025 E-commerce Builder Pro. Todos os direitos reservados.
           </p>
         </div>
       </footer>
