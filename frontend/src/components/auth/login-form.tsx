@@ -1,12 +1,12 @@
-﻿'use client'
+﻿// frontend/src/components/auth/login-form.tsx
+'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-
 import { LoadingSpinner } from '@/components/ui/loading'
 import { useAuth } from '@/lib/auth-context'
 
@@ -20,8 +20,16 @@ export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const { login, register } = useAuth()
+  const { login, register, isAuthenticated, isLoading: authLoading } = useAuth()
   const router = useRouter()
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      console.log('User is authenticated, redirecting to dashboard')
+      router.push('/dashboard')
+    }
+  }, [isAuthenticated, authLoading, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -30,12 +38,19 @@ export function LoginForm() {
 
     try {
       if (isLogin) {
+        console.log('Attempting login...')
         await login(formData.email, formData.password)
       } else {
+        console.log('Attempting registration...')
         await register(formData.email, formData.password, formData.name)
       }
-      router.push('/dashboard')
+      
+      console.log('Auth successful, redirecting...')
+      // Force navigation after successful auth
+      window.location.href = '/dashboard'
+      
     } catch (err) {
+      console.error('Auth error:', err)
       setError(err instanceof Error ? err.message : 'Erro desconhecido')
     } finally {
       setIsLoading(false)
@@ -47,6 +62,27 @@ export function LoginForm() {
       ...prev,
       [e.target.name]: e.target.value
     }))
+  }
+
+  // Show loading if auth is still initializing
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <LoadingSpinner size={48} />
+      </div>
+    )
+  }
+
+  // Don't render form if already authenticated
+  if (isAuthenticated) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="text-center">
+          <LoadingSpinner size={48} className="mx-auto mb-4" />
+          <p>Redirecionando para o dashboard...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -139,5 +175,4 @@ export function LoginForm() {
         </CardContent>
       </Card>
     </div>
-  )
-}
+  )}

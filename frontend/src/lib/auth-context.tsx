@@ -1,4 +1,5 @@
-﻿'use client'
+﻿// frontend/src/lib/auth-context.tsx
+'use client'
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
 import { apiClient, User } from './api'
@@ -28,6 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUser(userData)
         } catch (error) {
           console.error('Failed to load user:', error)
+          // Clear invalid token
           localStorage.removeItem('auth_token')
           apiClient.clearToken()
         }
@@ -39,15 +41,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const login = async (email: string, password: string) => {
-    const response = await apiClient.login(email, password)
-    apiClient.setToken(response.token)
-    setUser(response.user)
+    try {
+      const response = await apiClient.login(email, password)
+      apiClient.setToken(response.token)
+      setUser(response.user)
+      console.log('Login successful, user:', response.user)
+    } catch (error) {
+      console.error('Login failed:', error)
+      throw error
+    }
   }
 
   const register = async (email: string, password: string, name: string) => {
-    const response = await apiClient.register(email, password, name)
-    apiClient.setToken(response.token)
-    setUser(response.user)
+    try {
+      const response = await apiClient.register(email, password, name)
+      apiClient.setToken(response.token)
+      setUser(response.user)
+      console.log('Registration successful, user:', response.user)
+    } catch (error) {
+      console.error('Registration failed:', error)
+      throw error
+    }
   }
 
   const logout = () => {

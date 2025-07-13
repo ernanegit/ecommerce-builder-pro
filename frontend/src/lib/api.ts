@@ -1,4 +1,5 @@
-﻿const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+﻿// frontend/src/lib/api.ts
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
 export interface User {
   id: string
@@ -57,6 +58,8 @@ class ApiClient {
     this.token = token
     if (typeof window !== 'undefined') {
       localStorage.setItem('auth_token', token)
+      // Also set cookie for middleware
+      document.cookie = `auth_token=${token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Strict`
     }
   }
 
@@ -64,6 +67,8 @@ class ApiClient {
     this.token = null
     if (typeof window !== 'undefined') {
       localStorage.removeItem('auth_token')
+      // Clear cookie as well
+      document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
     }
   }
 

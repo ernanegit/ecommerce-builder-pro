@@ -1,4 +1,5 @@
-﻿'use client'
+﻿// frontend/src/components/dashboard/stores-list.tsx
+'use client'
 
 import { Store } from '@/lib/api'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -42,7 +43,7 @@ function StoreCard({ store }: StoreCardProps) {
     }
   }
 
-  const storeUrl = store.domain || ${store.subdomain}.ecommerce-builder.com
+  const storeUrl = store.domain || `${store.subdomain}.ecommerce-builder.com`
 
   return (
     <Card className="hover:shadow-md transition-shadow">
@@ -78,7 +79,7 @@ function StoreCard({ store }: StoreCardProps) {
           <Button 
             size="sm" 
             variant="outline" 
-            onClick={() => window.open(https://, '_blank')}
+            onClick={() => window.open(`https://${storeUrl}`, '_blank')}
             disabled={store.status !== 'ACTIVE'}
           >
             <ExternalLink className="w-4 h-4 mr-1" />
@@ -88,7 +89,7 @@ function StoreCard({ store }: StoreCardProps) {
           <Button 
             size="sm" 
             variant="outline"
-            onClick={() => router.push(/dashboard/stores//analytics)}
+            onClick={() => router.push(`/dashboard/stores/${store.id}/analytics`)}
           >
             <BarChart3 className="w-4 h-4 mr-1" />
             Analytics
@@ -97,7 +98,7 @@ function StoreCard({ store }: StoreCardProps) {
           <Button 
             size="sm" 
             variant="outline"
-            onClick={() => router.push(/dashboard/stores//settings)}
+            onClick={() => router.push(`/dashboard/stores/${store.id}/settings`)}
           >
             <Settings className="w-4 h-4 mr-1" />
             Configurar
@@ -189,5 +190,4 @@ export function StoresList() {
         ))}
       </div>
     </div>
-  )
-}
+  )}

@@ -1,4 +1,5 @@
-﻿'use client'
+﻿// frontend/src/components/dashboard/dashboard-layout.tsx
+'use client'
 
 import { ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
@@ -92,5 +93,4 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         </main>
       </div>
     </div>
-  )
-}
+  )}
